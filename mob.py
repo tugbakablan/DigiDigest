@@ -448,12 +448,22 @@ def live_oral_score(parent_prob, known_ace, unknown_predictions, fragments):
         digestion_score = 30
 
     score = (
-        0.20 * parent_score
-        + 0.30 * known_score
-        + 0.25 * unknown_score
-        + 0.15 * absorption
-        + 0.10 * digestion_score
+            0.35 * parent_score
+            + 0.25 * known_score
+            + 0.20 * unknown_score
+            + 0.15 * absorption
+            + 0.05 * digestion_score
     )
+
+    # Strong short oral peptide correction
+    if parent_score >= 85 and absorption >= 85:
+        score += 12
+
+    # BIOPEP-supported active short peptide bonus
+    if parent_score >= 90 and len(known_ace_fragments) >= 1:
+        score += 10
+
+    score = min(score, 100)
 
     return round(max(0, min(100, score)), 2), absorption, best_unknown_prob
 
