@@ -1,8 +1,0 @@
-streamlit
-pandas
-openpyxl
-scikit-learn
-joblib
-requests
-beautifulsoup4
-lxml
